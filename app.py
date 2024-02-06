@@ -1,4 +1,5 @@
 import os
+import json
 import random
 import streamlit as st
 import requests
@@ -6,6 +7,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from dotenv import load_dotenv
+from streamlit_local_storage import LocalStorage
+import streamlit.components.v1 as components
 
 load_dotenv()
 
@@ -113,6 +116,13 @@ def main():
             'task_systemprompt': '',
         },
     ]
+    
+    localStorage = LocalStorage()
+    
+    # Initialize session state to store text area values
+    if 'text_area_values' not in st.session_state:
+        st.session_state.text_area_values = {}
+        print(f"st.session_state.text_area_values: {st.session_state.text_area_values}")
 
     # Sidebar components
     st.sidebar.title('Microsoft Copilot Tests')
@@ -136,9 +146,18 @@ def main():
 
     # Loop through each task, check if it was selected, and display a text area if it was
     for task in full_tasks:
-        if task_checkboxes[task['task_text']]:  # Check if the task was selected
-            # Show text area for the task
-            task['task_systemprompt'] = st.text_area(task['task_text'])
+        if task_checkboxes[task['task_text']]:
+            # Show text area for the task and retrieve the value from session state
+            key = f"task_text_area_{task['task_text']}"
+            
+            # FIXME: Retrieve the previous text value from session state
+            # previous_text = localStorage.getItem(key)
+            task['task_systemprompt'] = st.text_area(task['task_text'], "", key=key)
+            print(f"key: {key}\nprevious_text: {previous_text}\ntask['task_systemprompt']: {task['task_systemprompt']}\n")
+            
+            # Save the text area value in session state
+            localStorage.setItem(key, task['task_systemprompt'])
+            
             # Add the task to the list of selected tasks
             selected_tasks.append(task)
 
