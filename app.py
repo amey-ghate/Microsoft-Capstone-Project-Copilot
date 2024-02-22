@@ -37,11 +37,13 @@ def make_openai_call(model_name, max_tokens, temperature, task, dataframe):
     system_message = task["task_systemprompt"]
 
     openai_api_key = os.getenv('OPENAI_API_KEY')
+    print(f'openai_api_key: {openai_api_key}')
 
     headers = {
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {openai_api_key}',
     }
+    print(f'headers: {headers}')
 
     messages = [
         {
@@ -62,6 +64,7 @@ def make_openai_call(model_name, max_tokens, temperature, task, dataframe):
 
     response = requests.post('https://api.openai.com/v1/chat/completions', json=data, headers=headers)
     result = response.json()
+    print(f"result: {result}")
     result_text = result['choices'][0]['message']['content']
     print(f"\ntask_name: {task_name}\nLLM result: {result_text}")
 
