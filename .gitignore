@@ -1,5 +1,6 @@
 Data/CSVs/*
 Data/JSONs/*
+Data/HTML/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
