@@ -23,7 +23,7 @@ TOGETHER_API_KEY=your_together_api_key
 
 2. **Run Latest Python Notebook**
 
-Latest notebook is `test_week10.ipynb`
+Latest notebook is `test_week10.ipynb` but play around further with `test_week10_master.ipynb`
 
 ## PLEASE READ
 
